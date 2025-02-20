@@ -1,4 +1,4 @@
-import Button from "../../Button/Button";
+import Button from "../../UI/Button/Button";
 import styles from "./PostItem.module.css";
 
 type PostItemPropsType = {

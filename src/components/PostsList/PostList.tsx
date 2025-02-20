@@ -20,7 +20,7 @@ function PostList({ title, posts, onRemovePostHandler }: PostListPropsType) {
                         key={post.id}
                         id={post.id}
                         title={post.title}
-                        body={post.content}
+                        body={post.body}
                         onRemovePost={onRemovePost}
                     />
                 );

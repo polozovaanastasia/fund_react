@@ -1,3 +1,7 @@
 .app {
     width: 1000px;
 }
+
+.post-list_empty {
+    text-align: center;
+}
