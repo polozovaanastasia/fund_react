@@ -5,20 +5,19 @@ type SelectPropsType = {
     value: string | undefined;
     options: Array<OptionType>;
     defaultValue: string;
-    onChangeHandler: (optionValue: OptionValueType) => void;
+    onChange: (optionValue: OptionValueType) => void;
 };
 
-function Select({
-    value,
-    options,
-    defaultValue,
-    onChangeHandler,
-}: SelectPropsType) {
-    function onChange(event: React.ChangeEvent<HTMLSelectElement>) {
-        onChangeHandler(event.target.value as OptionValueType);
+function Select({ value, options, defaultValue, onChange }: SelectPropsType) {
+    function onChangeHandler(event: React.ChangeEvent<HTMLSelectElement>) {
+        onChange(event.target.value as OptionValueType);
     }
     return (
-        <select className={styles["select"]} value={value} onChange={onChange}>
+        <select
+            className={styles["select"]}
+            value={value}
+            onChange={onChangeHandler}
+        >
             <option disabled>{defaultValue}</option>
             {options.map((option) => (
                 <option

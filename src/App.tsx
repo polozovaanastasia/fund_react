@@ -3,9 +3,8 @@ import "./App.css";
 import AddPostForm from "./components/AddPostForm/AddPostForm";
 import ClassCounter from "./components/Counter/classCounter";
 import Counter from "./components/Counter/Counter";
+import PostFilter from "./components/PostFilter/PostFilter";
 import PostList from "./components/PostsList/PostList";
-import Input from "./components/UI/Input/Input";
-import Select from "./components/UI/Select/Select";
 
 export type PostType = {
     id: number;
@@ -18,7 +17,12 @@ export type OptionType = {
     label: string;
 };
 
-export type OptionValueType = keyof Omit<PostType, "id">;
+export type OptionValueType = keyof Omit<PostType, "id"> | "";
+
+export type FilterType = {
+    sort: OptionValueType;
+    query: string;
+};
 
 function App() {
     const [posts, setPosts] = useState<Array<PostType>>([
@@ -39,25 +43,25 @@ function App() {
         },
     ]);
 
-    const [selectedSort, setSelectedSort] = useState<
-        OptionValueType | undefined
-    >(undefined);
-    const [searchQuery, setSearchQuery] = useState<string>("");
+    const [filter, setFilter] = useState<FilterType>({ sort: "", query: "" });
 
     const sortedPosts: Array<PostType> = useMemo(() => {
-        if (selectedSort) {
+        const sortKey = filter.sort;
+        if (sortKey) {
             return [...posts].sort((a, b) =>
-                a[selectedSort].localeCompare(b[selectedSort])
+                a[sortKey].localeCompare(b[sortKey])
             );
         }
         return posts;
-    }, [selectedSort, posts]);
+    }, [filter.sort, posts]);
 
     const sortedAndSearchedPosts: Array<PostType> = useMemo(() => {
         return sortedPosts.filter((post) => {
-            return post.title.toLowerCase().includes(searchQuery.toLowerCase());
+            return post.title
+                .toLowerCase()
+                .includes(filter.query.toLowerCase());
         });
-    }, [searchQuery, sortedPosts]);
+    }, [filter.query, sortedPosts]);
 
     function onRemovePostHandler(id: number) {
         setPosts(posts.filter((post: PostType) => post.id != id));
@@ -66,33 +70,12 @@ function App() {
     function onAddPostHandler(newPost: PostType) {
         setPosts((lastPosts) => [...lastPosts, newPost]);
     }
-
-    function onChangeSortOptionHandler(selectedOption: OptionValueType) {
-        setSelectedSort(selectedOption);
-    }
-
-    function onSearchPostHandler(query: string) {
-        setSearchQuery(query);
-    }
     return (
         <div className="app">
             <Counter />
             <ClassCounter />
             <AddPostForm onAddPostHandler={onAddPostHandler} />
-            <Input
-                value={searchQuery}
-                placeholder="Поиск..."
-                onChange={onSearchPostHandler}
-            />
-            <Select
-                value={selectedSort}
-                options={[
-                    { value: "title", label: "По названию" },
-                    { value: "body", label: "По описанию" },
-                ]}
-                defaultValue="Сортировать"
-                onChangeHandler={onChangeSortOptionHandler}
-            />
+            <PostFilter filter={filter} setFilter={setFilter} />
             {sortedAndSearchedPosts.length ? (
                 <PostList
                     title={"Technology list"}
