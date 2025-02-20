@@ -2,7 +2,7 @@ import { OptionType, OptionValueType } from "../../../App";
 import styles from "./Select.module.css";
 
 type SelectPropsType = {
-    value: string;
+    value: string | undefined;
     options: Array<OptionType>;
     defaultValue: string;
     onChangeHandler: (optionValue: OptionValueType) => void;

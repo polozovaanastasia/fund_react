@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import "./App.css";
 import AddPostForm from "./components/AddPostForm/AddPostForm";
 import ClassCounter from "./components/Counter/classCounter";
 import Counter from "./components/Counter/Counter";
 import PostList from "./components/PostsList/PostList";
+import Input from "./components/UI/Input/Input";
 import Select from "./components/UI/Select/Select";
 
 export type PostType = {
@@ -38,7 +39,25 @@ function App() {
         },
     ]);
 
-    const [selectedSort, setSelectedSort] = useState<string>("");
+    const [selectedSort, setSelectedSort] = useState<
+        OptionValueType | undefined
+    >(undefined);
+    const [searchQuery, setSearchQuery] = useState<string>("");
+
+    const sortedPosts: Array<PostType> = useMemo(() => {
+        if (selectedSort) {
+            return [...posts].sort((a, b) =>
+                a[selectedSort].localeCompare(b[selectedSort])
+            );
+        }
+        return posts;
+    }, [selectedSort, posts]);
+
+    const sortedAndSearchedPosts: Array<PostType> = useMemo(() => {
+        return sortedPosts.filter((post) => {
+            return post.title.toLowerCase().includes(searchQuery.toLowerCase());
+        });
+    }, [searchQuery, sortedPosts]);
 
     function onRemovePostHandler(id: number) {
         setPosts(posts.filter((post: PostType) => post.id != id));
@@ -50,17 +69,21 @@ function App() {
 
     function onChangeSortOptionHandler(selectedOption: OptionValueType) {
         setSelectedSort(selectedOption);
-        setPosts((lastPosts) =>
-            [...lastPosts].sort((a, b) =>
-                a[selectedOption].localeCompare(b[selectedOption])
-            )
-        );
+    }
+
+    function onSearchPostHandler(query: string) {
+        setSearchQuery(query);
     }
     return (
         <div className="app">
             <Counter />
             <ClassCounter />
             <AddPostForm onAddPostHandler={onAddPostHandler} />
+            <Input
+                value={searchQuery}
+                placeholder="Поиск..."
+                onChange={onSearchPostHandler}
+            />
             <Select
                 value={selectedSort}
                 options={[
@@ -70,10 +93,10 @@ function App() {
                 defaultValue="Сортировать"
                 onChangeHandler={onChangeSortOptionHandler}
             />
-            {posts.length ? (
+            {sortedAndSearchedPosts.length ? (
                 <PostList
                     title={"Technology list"}
-                    posts={posts}
+                    posts={sortedAndSearchedPosts}
                     onRemovePostHandler={onRemovePostHandler}
                 />
             ) : (

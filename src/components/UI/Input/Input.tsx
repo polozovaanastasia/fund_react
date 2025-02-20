@@ -2,7 +2,7 @@ import styles from "./Input.module.css";
 
 type InputPropsType = {
     value: string;
-    placeholder: string;
+    placeholder?: string;
     disabled?: boolean;
     onChange: (value: string) => void;
 };
