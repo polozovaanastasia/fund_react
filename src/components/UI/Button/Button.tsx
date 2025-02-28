@@ -1,14 +1,17 @@
+import clsx from "clsx";
 import styles from "./Button.module.css";
 
 type ButtonPropsType = {
     disabled?: boolean;
     children: React.ReactNode;
     onClick: () => void;
+    className?: string;
 };
 
-function Button({ children, ...props }: ButtonPropsType) {
+function Button({ children, className, ...props }: ButtonPropsType) {
+    const buttonClasses = clsx(styles["button"], className);
     return (
-        <button className={styles["button"]} type="button" {...props}>
+        <button className={buttonClasses} type="button" {...props}>
             {children}
         </button>
     );

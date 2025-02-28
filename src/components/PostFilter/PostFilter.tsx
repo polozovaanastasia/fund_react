@@ -15,6 +15,7 @@ function PostFilter({ filter, setFilter }: PostFilterPropsType) {
                 placeholder="Поиск..."
                 onChange={(value) => setFilter({ ...filter, query: value })}
             />
+            <br />
             <Select
                 value={filter.sort}
                 options={[

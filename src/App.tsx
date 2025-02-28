@@ -1,10 +1,10 @@
 import { useMemo, useState } from "react";
 import "./App.css";
 import AddPostForm from "./components/AddPostForm/AddPostForm";
-import ClassCounter from "./components/Counter/classCounter";
-import Counter from "./components/Counter/Counter";
 import PostFilter from "./components/PostFilter/PostFilter";
 import PostList from "./components/PostsList/PostList";
+import Button from "./components/UI/Button/Button";
+import Modal from "./components/UI/Modal/Modal";
 
 export type PostType = {
     id: number;
@@ -44,6 +44,7 @@ function App() {
     ]);
 
     const [filter, setFilter] = useState<FilterType>({ sort: "", query: "" });
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
     const sortedPosts: Array<PostType> = useMemo(() => {
         const sortKey = filter.sort;
@@ -69,22 +70,32 @@ function App() {
 
     function onAddPostHandler(newPost: PostType) {
         setPosts((lastPosts) => [...lastPosts, newPost]);
+        setIsModalOpen(false);
+    }
+
+    function onModalOpen() {
+        setIsModalOpen(true);
+    }
+
+    function onModalClose() {
+        setIsModalOpen(false);
     }
     return (
         <div className="app">
-            <Counter />
-            <ClassCounter />
-            <AddPostForm onAddPostHandler={onAddPostHandler} />
+            <Button onClick={onModalOpen}>Добавить пост</Button>
+            <br />
             <PostFilter filter={filter} setFilter={setFilter} />
-            {sortedAndSearchedPosts.length ? (
-                <PostList
-                    title={"Technology list"}
-                    posts={sortedAndSearchedPosts}
-                    onRemovePostHandler={onRemovePostHandler}
-                />
-            ) : (
-                <h2 className="post-list_empty">Посты не найдены</h2>
-            )}
+            <PostList
+                title={"Technology list"}
+                posts={sortedAndSearchedPosts}
+                onRemovePostHandler={onRemovePostHandler}
+            />
+            <Modal isOpen={isModalOpen} onClose={onModalClose}>
+                <>
+                    <h2>Новый пост:</h2>
+                    <AddPostForm onAddPostHandler={onAddPostHandler} />
+                </>
+            </Modal>
         </div>
     );
 }

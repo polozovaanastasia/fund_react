@@ -8,6 +8,10 @@ type PostListPropsType = {
     onRemovePostHandler: (id: number) => void;
 };
 function PostList({ title, posts, onRemovePostHandler }: PostListPropsType) {
+    if (!posts.length) {
+        return <h2 className="post-list_empty">Посты не найдены</h2>;
+    }
+
     return (
         <div className={styles["post-list"]}>
             <h1 className={styles["post-list__title"]}>{title}</h1>

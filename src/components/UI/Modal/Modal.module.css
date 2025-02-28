@@ -1,0 +1,28 @@
+.modal-overlay {
+    display: none;
+    padding-top: 50px;
+    position: fixed;
+    inset: 0;
+    background-color: rgb(15, 23, 42, 0.6);
+    backdrop-filter: blur(8px);
+}
+.modal__is-open {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+}
+
+.modal {
+    min-width: 500px;
+    position: relative;
+    padding: 25px 50px;
+    background-color: #ffffff;
+    border-radius: 10px;
+}
+
+.modal_btn-close {
+    position: absolute;
+    top: 0;
+    left: calc(100% + 10px);
+    cursor: pointer;
+}
