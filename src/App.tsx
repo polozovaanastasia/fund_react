@@ -1,10 +1,11 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import "./App.css";
 import AddPostForm from "./components/AddPostForm/AddPostForm";
 import PostFilter from "./components/PostFilter/PostFilter";
 import PostList from "./components/PostsList/PostList";
 import Button from "./components/UI/Button/Button";
 import Modal from "./components/UI/Modal/Modal";
+import { usePosts } from "./hooks/usePosts";
 
 export type PostType = {
     id: number;
@@ -46,23 +47,7 @@ function App() {
     const [filter, setFilter] = useState<FilterType>({ sort: "", query: "" });
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-    const sortedPosts: Array<PostType> = useMemo(() => {
-        const sortKey = filter.sort;
-        if (sortKey) {
-            return [...posts].sort((a, b) =>
-                a[sortKey].localeCompare(b[sortKey])
-            );
-        }
-        return posts;
-    }, [filter.sort, posts]);
-
-    const sortedAndSearchedPosts: Array<PostType> = useMemo(() => {
-        return sortedPosts.filter((post) => {
-            return post.title
-                .toLowerCase()
-                .includes(filter.query.toLowerCase());
-        });
-    }, [filter.query, sortedPosts]);
+    const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
 
     function onRemovePostHandler(id: number) {
         setPosts(posts.filter((post: PostType) => post.id != id));
