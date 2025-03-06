@@ -1,4 +1,5 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import "./App.css";
 import AddPostForm from "./components/AddPostForm/AddPostForm";
 import PostFilter from "./components/PostFilter/PostFilter";
@@ -26,28 +27,26 @@ export type FilterType = {
 };
 
 function App() {
-    const [posts, setPosts] = useState<Array<PostType>>([
-        {
-            id: 1,
-            title: "1. JavaScript",
-            body: "JavaScript is the programming language of the Web. JavaScript is easy to learn. This tutorial will teach you JavaScript from basic to advanced.",
-        },
-        {
-            id: 2,
-            title: "2. TypeScript",
-            body: "TypeScript is a strongly typed programming language that builds on JavaScript, giving you better tooling at any scale.",
-        },
-        {
-            id: 3,
-            title: "3. React",
-            body: "React is the library for web and native user interfaces. Build user interfaces out of individual pieces called components written in JavaScript.",
-        },
-    ]);
+    const [posts, setPosts] = useState<Array<PostType>>([]);
 
     const [filter, setFilter] = useState<FilterType>({ sort: "", query: "" });
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
     const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
+
+    useEffect(() => {
+        async function fetchPosts() {
+            await axios
+                .get("https://jsonplaceholder.typicode.com/posts")
+                .then((response) => {
+                    setPosts(response.data);
+                })
+                .catch((error) => {
+                    new Error(error);
+                });
+        }
+        fetchPosts();
+    }, []);
 
     function onRemovePostHandler(id: number) {
         setPosts(posts.filter((post: PostType) => post.id != id));
@@ -58,16 +57,9 @@ function App() {
         setIsModalOpen(false);
     }
 
-    function onModalOpen() {
-        setIsModalOpen(true);
-    }
-
-    function onModalClose() {
-        setIsModalOpen(false);
-    }
     return (
         <div className="app">
-            <Button onClick={onModalOpen}>Добавить пост</Button>
+            <Button onClick={() => setIsModalOpen(true)}>Добавить пост</Button>
             <br />
             <PostFilter filter={filter} setFilter={setFilter} />
             <PostList
@@ -75,7 +67,7 @@ function App() {
                 posts={sortedAndSearchedPosts}
                 onRemovePostHandler={onRemovePostHandler}
             />
-            <Modal isOpen={isModalOpen} onClose={onModalClose}>
+            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
                 <>
                     <h2>Новый пост:</h2>
                     <AddPostForm onAddPostHandler={onAddPostHandler} />
