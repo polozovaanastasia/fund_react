@@ -1,0 +1,21 @@
+.navbar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    height: 50px;
+    width: 100%;
+    padding: 0 15px;
+    background-color: rgb(7, 153, 95);
+}
+
+.navbar_item {
+    padding: 5px 10px;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.navbar_item:hover {
+    border-bottom: 1px solid #ffffff;
+}

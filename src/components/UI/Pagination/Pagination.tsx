@@ -1,20 +1,22 @@
 import clsx from "clsx";
+import { getPagesArray } from "../../../utils/pages";
 import Button from "../Button/Button";
 import styles from "./Pagination.module.css";
 
 type PaginationPropsType = {
-    pages: Array<number>;
-    activePage: number;
+    page: number;
+    totalPages: number;
     changePage: (p: number) => void;
 };
 
-function Pagination({ pages, activePage, changePage }: PaginationPropsType) {
+function Pagination({ page, totalPages, changePage }: PaginationPropsType) {
+    const pages = getPagesArray(totalPages);
     return (
         <div className={styles["pagination"]}>
             {pages.map((p) => {
                 const buttonClasses = clsx(
                     styles["pagination_button"],
-                    activePage === p && styles["pagination_button__active"]
+                    page === p && styles["pagination_button__active"]
                 );
                 return (
                     <span key={p} className={buttonClasses}>

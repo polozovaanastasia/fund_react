@@ -1,9 +1,28 @@
 .button {
     padding: 7px 15px;
-    background-color: rgb(7, 153, 95);
-    border: none;
     border-radius: 5px;
     font-family: inherit;
-    color: #fff;
     cursor: pointer;
+    transition: background-color 0.3s color 0.3s;
+}
+
+.button__primary {
+    background-color: rgb(7, 153, 95);
+    color: #fff;
+    border: 1px solid rgb(7, 153, 95);
+}
+
+.button__outline {
+    background-color: #fff;
+    border: 1px solid rgb(7, 153, 95);
+    color: rgb(7, 153, 95);
+}
+
+.button__primary:hover,
+.button__outline:hover {
+    background-color: rgb(53, 162, 118);
+    border-color: rgb(53, 162, 118);
+}
+.button__outline:hover {
+    color: #ffffff;
 }

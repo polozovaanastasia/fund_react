@@ -1,6 +1,7 @@
-import { FilterType } from "../../App";
+import { FilterType } from "../../pages/Posts";
 import Input from "../UI/Input/Input";
 import Select from "../UI/Select/Select";
+import styles from "./PostFilter.module.css";
 
 type PostFilterPropsType = {
     filter: FilterType;
@@ -9,7 +10,7 @@ type PostFilterPropsType = {
 
 function PostFilter({ filter, setFilter }: PostFilterPropsType) {
     return (
-        <>
+        <div className={styles["post-filter"]}>
             <Input
                 value={filter.query}
                 placeholder="Поиск..."
@@ -25,7 +26,7 @@ function PostFilter({ filter, setFilter }: PostFilterPropsType) {
                 defaultValue="Сортировать"
                 onChange={(value) => setFilter({ ...filter, sort: value })}
             />
-        </>
+        </div>
     );
 }
 

@@ -15,7 +15,8 @@ export const useFetching = (
                 // setIsLoading(true);
                 await callback(limit, page);
             } catch (error) {
-                setError(ensureError(error).message); // читать: https://medium.com/with-orus/the-5-commandments-of-clean-error-handling-in-typescript-93a9cbdf1af5
+                const message = ensureError(error).message;
+                setError(message); // читать: https://medium.com/with-orus/the-5-commandments-of-clean-error-handling-in-typescript-93a9cbdf1af5
             } finally {
                 setIsLoading(false);
             }

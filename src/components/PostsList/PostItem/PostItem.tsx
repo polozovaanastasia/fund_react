@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Button from "../../UI/Button/Button";
 import styles from "./PostItem.module.css";
 
@@ -9,6 +10,13 @@ type PostItemPropsType = {
 };
 
 function PostItem({ id, title, body, onRemovePost }: PostItemPropsType) {
+    const navigate = useNavigate();
+    console.log(navigate);
+
+    const handleClick = () => {
+        navigate(`/posts/${id}`);
+    };
+
     function onRemovePostHandler() {
         onRemovePost(id);
     }
@@ -21,6 +29,9 @@ function PostItem({ id, title, body, onRemovePost }: PostItemPropsType) {
                 {body}
             </div>
             <div className={styles["post__controls"]}>
+                <Button variant="outline" onClick={handleClick}>
+                    Открыть
+                </Button>
                 <Button onClick={onRemovePostHandler}>Удалить</Button>
             </div>
         </div>
