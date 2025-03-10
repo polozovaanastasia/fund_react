@@ -11,9 +11,8 @@ type PostItemPropsType = {
 
 function PostItem({ id, title, body, onRemovePost }: PostItemPropsType) {
     const navigate = useNavigate();
-    console.log(navigate);
 
-    const handleClick = () => {
+    const openPost = () => {
         navigate(`/posts/${id}`);
     };
 
@@ -29,7 +28,7 @@ function PostItem({ id, title, body, onRemovePost }: PostItemPropsType) {
                 {body}
             </div>
             <div className={styles["post__controls"]}>
-                <Button variant="outline" onClick={handleClick}>
+                <Button variant="outline" onClick={openPost}>
                     Открыть
                 </Button>
                 <Button onClick={onRemovePostHandler}>Удалить</Button>

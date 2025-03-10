@@ -40,8 +40,8 @@ function Posts() {
     const [limit, setLimit] = useState<number>(10);
     const [page, setPage] = useState<number>(1);
 
-    const [fetchPosts, isPostsLoading, postsFetchingError] = useFetching(
-        useCallback(async (limit, page) => {
+    const [fetchPosts, isLoading, error] = useFetching(
+        useCallback(async (limit: number, page: number) => {
             const response = await PostService.getAll(limit, page);
             const totalPosts = response.headers["x-total-count"];
 
@@ -78,10 +78,8 @@ function Posts() {
             <br />
             <PostFilter filter={filter} setFilter={setFilter} />
 
-            {postsFetchingError && (
-                <h2>Произошла ошибка: {postsFetchingError}</h2>
-            )}
-            {isPostsLoading ? (
+            {error && <h2>Произошла ошибка: {error}</h2>}
+            {isLoading ? (
                 <div className="app_loader-container">
                     <Loader />
                 </div>
