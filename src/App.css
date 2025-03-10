@@ -1,6 +1,13 @@
 .app {
     width: 1000px;
+    margin: 0 auto;
     position: relative;
+}
+
+.app_loader-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
 }
 
 .post-list_empty {

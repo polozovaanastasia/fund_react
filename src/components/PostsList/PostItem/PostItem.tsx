@@ -15,7 +15,9 @@ function PostItem({ id, title, body, onRemovePost }: PostItemPropsType) {
     return (
         <div className={styles["post"]}>
             <div className={styles["post__content"]}>
-                <h3 className={styles["post__title"]}>{title}</h3>
+                <h3 className={styles["post__title"]}>
+                    {id}. {title}
+                </h3>
                 {body}
             </div>
             <div className={styles["post__controls"]}>
