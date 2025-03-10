@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import { ensureError } from "../utils/ensureError";
 
 type FetchCallbackType = (limit: number, page: number) => Promise<void>;
 
@@ -14,8 +15,7 @@ export const useFetching = (
                 // setIsLoading(true);
                 await callback(limit, page);
             } catch (error) {
-                console.log("From useFetch", error);
-                if (error instanceof Error) setError(error.message); // читать: https://medium.com/with-orus/the-5-commandments-of-clean-error-handling-in-typescript-93a9cbdf1af5
+                setError(ensureError(error).message); // читать: https://medium.com/with-orus/the-5-commandments-of-clean-error-handling-in-typescript-93a9cbdf1af5
             } finally {
                 setIsLoading(false);
             }
