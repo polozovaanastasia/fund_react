@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { OptionValueType, PostType } from "../App";
+import { OptionValueType, PostType } from "../pages/Posts";
 
 export const useSortedPosts = (
     posts: Array<PostType>,

@@ -1,0 +1,23 @@
+.comments-list {
+    margin: 20px 0;
+}
+
+.comments-list_header {
+    margin-bottom: 10px;
+}
+
+.comment {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid rgb(7, 153, 95);
+}
+
+.comment_header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: rgb(7, 153, 95);
+}

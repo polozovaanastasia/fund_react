@@ -9,9 +9,10 @@ export const useFetching = <Args extends unknown[]>(
 
     const fetching = useCallback(
         async (...args: Args) => {
+            // rest - собираем переданные аргументы в массив
             try {
                 setIsLoading(true);
-                await callback(...args);
+                await callback(...args); // spread - раскладываю массив на отдельные элементы
             } catch (e) {
                 const message = ensureError(e).message;
                 setError(message);

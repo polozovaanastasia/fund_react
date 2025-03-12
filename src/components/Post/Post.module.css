@@ -1,0 +1,9 @@
+.post {
+    padding: 15px;
+    background-color: rgb(7, 153, 95);
+    color: #ffffff;
+}
+
+.post_title {
+    margin-bottom: 15px;
+}

@@ -1,4 +1,4 @@
-import { PostType } from "../../App";
+import { PostType } from "../../pages/Posts";
 import PostItem from "./PostItem/PostItem";
 import styles from "./PostList.module.css";
 
