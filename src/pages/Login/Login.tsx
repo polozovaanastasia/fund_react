@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "../../components/UI/Button/Button";
 import Input from "../../components/UI/Input/Input";
 import { useAuth } from "../../hooks/useAuth";
@@ -6,6 +7,7 @@ import styles from "./Login.module.css";
 
 function Login() {
     const { setIsAuth } = useAuth();
+    const navigate = useNavigate();
 
     const [login, setLogin] = useState<string>("");
     const [password, setPassword] = useState<string>("");
@@ -20,6 +22,7 @@ function Login() {
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         setIsAuth(true);
+        navigate("/posts");
     };
     return (
         <div className={styles["login"]}>
@@ -36,7 +39,7 @@ function Login() {
                     placeholder="Введите пароль"
                     onChange={onChangePassword}
                 />
-                <Button onClick={() => {}}>Войти</Button>
+                <Button type="submit">Войти</Button>
             </form>
         </div>
     );

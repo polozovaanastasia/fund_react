@@ -8,12 +8,12 @@ type ButtonPropsType = {
     variant?: ButtonVariantType;
     disabled?: boolean;
     children: React.ReactNode;
-    onClick: () => void;
+    onClick?: () => void;
     className?: string;
 };
 
 function Button({
-    type = "submit",
+    type = "button",
     variant = "primary",
     children,
     className,

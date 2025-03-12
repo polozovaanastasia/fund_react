@@ -5,7 +5,7 @@ import styles from "./Navbar.module.css";
 
 function Navbar() {
     const { isAuth } = useAuth();
-    // debugger;
+
     const NavbarClasses = clsx(
         styles["navbar"],
         isAuth && styles["navbar__is-auth"]
