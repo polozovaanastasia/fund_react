@@ -4,6 +4,7 @@ import styles from "./Button.module.css";
 type ButtonVariantType = "primary" | "outline";
 
 type ButtonPropsType = {
+    type?: "submit" | "reset" | "button";
     variant?: ButtonVariantType;
     disabled?: boolean;
     children: React.ReactNode;
@@ -12,6 +13,7 @@ type ButtonPropsType = {
 };
 
 function Button({
+    type = "submit",
     variant = "primary",
     children,
     className,
@@ -24,7 +26,7 @@ function Button({
         className
     );
     return (
-        <button className={buttonClasses} type="button" {...props}>
+        <button className={buttonClasses} type={type} {...props}>
             {children}
         </button>
     );

@@ -1,8 +1,9 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 import { privateRoutes, publicRoutes } from "../../router";
 
 function AppRoutes() {
-    const isAuth = false;
+    const { isAuth } = useAuth();
     return isAuth ? (
         <Routes>
             <Route path="/" element={<Navigate to="/posts" replace />} />
