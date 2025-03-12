@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PostType } from "../../App";
+import { PostType } from "../../pages/Posts";
 import Button from "../UI/Button/Button";
 import Input from "../UI/Input/Input";
 import styles from "./AddPostForm.module.css";

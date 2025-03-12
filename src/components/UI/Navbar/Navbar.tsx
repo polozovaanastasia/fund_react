@@ -10,6 +10,9 @@ function Navbar() {
             <Link to="posts" className={styles["navbar_item"]}>
                 Posts
             </Link>
+            <Link to="login" className={styles["navbar_item"]}>
+                Login
+            </Link>
         </div>
     );
 }
