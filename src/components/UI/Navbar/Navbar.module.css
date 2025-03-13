@@ -12,13 +12,18 @@
 }
 
 .navbar__is-auth {
-    justify-content: start;
+    justify-content: space-between;
 }
 
 .navbar_item {
+    flex-shrink: 0;
     padding: 5px 10px;
     color: #ffffff;
     text-decoration: none;
+}
+
+button {
+    margin-left: auto;
 }
 
 .navbar_item:hover {

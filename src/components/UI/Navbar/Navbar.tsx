@@ -1,18 +1,26 @@
 import clsx from "clsx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
+import Button from "../Button/Button";
 import styles from "./Navbar.module.css";
 
 function Navbar() {
-    const { isAuth } = useAuth();
+    const { isAuth, setIsAuth } = useAuth();
+    const navigate = useNavigate();
 
     const NavbarClasses = clsx(
         styles["navbar"],
         isAuth && styles["navbar__is-auth"]
     );
+
+    const logout = () => {
+        setIsAuth(false);
+        localStorage.removeItem("auth");
+        navigate("/login");
+    };
     return (
         <div className={NavbarClasses}>
-            {isAuth ? (
+            {isAuth && (
                 <>
                     <Link to="about" className={styles["navbar_item"]}>
                         About
@@ -20,11 +28,10 @@ function Navbar() {
                     <Link to="posts" className={styles["navbar_item"]}>
                         Posts
                     </Link>
+                    <Button variant="outline" onClick={logout}>
+                        Выйти
+                    </Button>
                 </>
-            ) : (
-                <Link to="login" className={styles["navbar_item"]}>
-                    Login
-                </Link>
             )}
         </div>
     );

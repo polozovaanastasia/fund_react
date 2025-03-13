@@ -21,6 +21,7 @@ function Login() {
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        localStorage.setItem("auth", "true");
         setIsAuth(true);
         navigate("/posts");
     };

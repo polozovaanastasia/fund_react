@@ -3,7 +3,7 @@
     border-radius: 5px;
     font-family: inherit;
     cursor: pointer;
-    transition: background-color 0.3s color 0.3s;
+    transition: all 0.3s;
 }
 
 .button__primary {
@@ -20,8 +20,8 @@
 
 .button__primary:hover,
 .button__outline:hover {
-    background-color: rgb(53, 162, 118);
-    border-color: rgb(53, 162, 118);
+    background-color: rgb(8, 183, 113);
+    border-color: rgb(8, 183, 113);
 }
 .button__outline:hover {
     color: #ffffff;

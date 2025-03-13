@@ -6,7 +6,6 @@ type LoaderPropsType = {
 };
 
 function Loader({ size = 24, color = "rgb(7, 153, 95)" }: LoaderPropsType) {
-    console.log("Loader rendered");
     return (
         <svg
             width={size}

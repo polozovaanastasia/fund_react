@@ -34,7 +34,6 @@ function PostIdPage() {
             setComments(response.data);
         }, [])
     );
-    console.log(CommentsError);
     useEffect(() => {
         if (params.id) {
             fetchPostById(params.id);

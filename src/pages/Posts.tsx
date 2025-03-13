@@ -55,8 +55,6 @@ function Posts() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    console.log(page);
-
     const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
 
     function onRemovePostHandler(id: number) {

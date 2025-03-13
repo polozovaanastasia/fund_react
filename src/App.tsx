@@ -4,9 +4,11 @@ import "./App.css";
 import AppRoutes from "./components/AppRoutes/AppRoutes";
 import Navbar from "./components/UI/Navbar/Navbar";
 import { AuthContext } from "./context";
+import { getInitAuth } from "./utils/auth";
 
 function App() {
-    const [isAuth, setIsAuth] = useState<boolean>(false);
+    const [isAuth, setIsAuth] = useState<boolean>(getInitAuth);
+
     return (
         <div className="app">
             <AuthContext.Provider value={{ isAuth, setIsAuth }}>
