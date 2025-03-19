@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import PostService from "../API/PostService";
 import AddPostForm from "../components/AddPostForm/AddPostForm";
 import PostFilter from "../components/PostFilter/PostFilter";
@@ -8,6 +8,7 @@ import Loader from "../components/UI/Loader/Loader";
 import Modal from "../components/UI/Modal/Modal";
 import Pagination from "../components/UI/Pagination/Pagination";
 import { useFetching } from "../hooks/useFetching";
+import { useObserver } from "../hooks/useObserver";
 import { usePosts } from "../hooks/usePosts";
 import { getPageCount } from "../utils/pages";
 
@@ -39,21 +40,26 @@ function Posts() {
     // eslint-disable-next-line
     const [limit, setLimit] = useState<number>(10);
     const [page, setPage] = useState<number>(1);
+    const lastElement = useRef<HTMLDivElement>(null);
 
     const [fetchPosts, isLoading, error] = useFetching(
         useCallback(async (limit: number, page: number) => {
             const response = await PostService.getAll(limit, page);
             const totalPosts = response.headers["x-total-count"];
 
-            setPosts(response.data);
+            setPosts((lastPosts) => [...lastPosts, ...response.data]);
             setTotalPages(getPageCount(totalPosts, limit));
         }, [])
+    );
+
+    useObserver(lastElement, isLoading, page < totalPages, () =>
+        setPage((lastPage) => lastPage + 1)
     );
 
     useEffect(() => {
         fetchPosts(limit, page);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [page]);
 
     const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
 
@@ -68,25 +74,26 @@ function Posts() {
 
     function changePage(page: number) {
         setPage(page);
-        fetchPosts(limit, page);
     }
     return (
         <div className="posts">
             <Button onClick={() => setIsModalOpen(true)}>Добавить пост</Button>
             <br />
             <PostFilter filter={filter} setFilter={setFilter} />
-
             {error && <h2>Произошла ошибка: {error}</h2>}
             {isLoading ? (
                 <div className="app_loader-container">
                     <Loader />
                 </div>
             ) : (
-                <PostList
-                    title={"Posts"}
-                    posts={sortedAndSearchedPosts}
-                    onRemovePostHandler={onRemovePostHandler}
-                />
+                <>
+                    <PostList
+                        title={"Posts"}
+                        posts={sortedAndSearchedPosts}
+                        onRemovePostHandler={onRemovePostHandler}
+                    />
+                    <div ref={lastElement}></div>
+                </>
             )}
             <Pagination
                 page={page}

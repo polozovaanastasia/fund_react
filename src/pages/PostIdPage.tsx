@@ -28,7 +28,7 @@ function PostIdPage() {
         }, [])
     );
 
-    const [fetchComments, isCommentsLoading, CommentsError] = useFetching(
+    const [fetchComments, isCommentsLoading] = useFetching(
         useCallback(async (id: string) => {
             const response = await PostService.getCommentsByPostId(id);
             setComments(response.data);
