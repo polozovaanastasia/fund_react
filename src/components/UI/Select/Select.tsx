@@ -1,8 +1,8 @@
-import { OptionType, OptionValueType } from "../../../App";
+import { OptionType, OptionValueType } from "../../../pages/Posts";
 import styles from "./Select.module.css";
 
 type SelectPropsType = {
-    value: string | undefined;
+    value: string | number | undefined;
     options: Array<OptionType>;
     defaultValue: string;
     onChange: (optionValue: OptionValueType) => void;

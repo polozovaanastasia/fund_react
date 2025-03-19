@@ -7,6 +7,7 @@ import Button from "../components/UI/Button/Button";
 import Loader from "../components/UI/Loader/Loader";
 import Modal from "../components/UI/Modal/Modal";
 import Pagination from "../components/UI/Pagination/Pagination";
+import Select from "../components/UI/Select/Select";
 import { useFetching } from "../hooks/useFetching";
 import { useObserver } from "../hooks/useObserver";
 import { usePosts } from "../hooks/usePosts";
@@ -23,7 +24,7 @@ export type OptionType = {
     label: string;
 };
 
-export type OptionValueType = keyof Omit<PostType, "id"> | "";
+export type OptionValueType = keyof Omit<PostType, "id"> | string | number;
 
 export type FilterType = {
     sort: OptionValueType;
@@ -37,7 +38,7 @@ function Posts() {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
     const [totalPages, setTotalPages] = useState<number>(0);
-    // eslint-disable-next-line
+
     const [limit, setLimit] = useState<number>(10);
     const [page, setPage] = useState<number>(1);
     const lastElement = useRef<HTMLDivElement>(null);
@@ -58,8 +59,7 @@ function Posts() {
 
     useEffect(() => {
         fetchPosts(limit, page);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page]);
+    }, [page, limit]);
 
     const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
 
@@ -80,6 +80,21 @@ function Posts() {
             <Button onClick={() => setIsModalOpen(true)}>Добавить пост</Button>
             <br />
             <PostFilter filter={filter} setFilter={setFilter} />
+            <Select
+                value={limit}
+                options={[
+                    { value: -1, label: "Показать все" },
+                    { value: 20, label: "20" },
+                    { value: 10, label: "10" },
+                    { value: 5, label: "5" },
+                ]}
+                defaultValue="Кол-во постов на странице"
+                onChange={(value) => {
+                    setLimit(Number(value));
+                    setPosts([]);
+                    setPage(1);
+                }}
+            />
             {error && <h2>Произошла ошибка: {error}</h2>}
             {isLoading ? (
                 <div className="app_loader-container">
